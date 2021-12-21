@@ -1,6 +1,5 @@
 //javascript
 
-
 console.log("Notes project");
 //calling function to add notes
 shownotes();
@@ -8,6 +7,7 @@ shownotes();
 //addbtn use for whene we click on add button then note is added
 let addbtn = document.getElementById("addbtn").addEventListener("click", function (e) {
     let addtext = document.getElementById("addtext");
+    let addtitle = document.getElementById("title");
 
     let notes = localStorage.getItem("notes");
     if (notes == null) {
@@ -16,11 +16,17 @@ let addbtn = document.getElementById("addbtn").addEventListener("click", functio
     else {
         notesobj = JSON.parse(notes);
     }
+
+    let myobj ={
+        title:addtitle.value,
+        text: addtext.value
+    }
     //noteobj is array which store all notes
-    notesobj.push(addtext.value);
+    notesobj.push(myobj);
     //storing notes in localstorage
     localStorage.setItem("notes", JSON.stringify(notesobj));
     addtext.value = "";
+    addtitle.value="";
     console.log(notesobj);
     shownotes();
 });
@@ -40,8 +46,8 @@ function shownotes() {
          <div class="notescard mx-2 my-2 card" style="width: 18rem;">
                
          <div class="card-body">
-           <h5 class="card-title">Note ${index + 1}</h5>
-           <p class="card-text">${element}</p>
+           <h5 class="card-title">${element.title} </h5>
+           <p class="card-text">${element.text}</p>
            <button  id="${index}" onclick="deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
          </div>
        </div>
